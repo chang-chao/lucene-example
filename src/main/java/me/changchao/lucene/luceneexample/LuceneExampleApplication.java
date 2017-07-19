@@ -6,12 +6,15 @@ import java.nio.file.Paths;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.IntPoint;
+import org.apache.lucene.document.LegacyIntField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.LegacyNumericRangeQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
@@ -51,7 +54,7 @@ public class LuceneExampleApplication implements CommandLineRunner {
 
 			for (int i = 0; i < docCount; i++) {
 				Document doc = new Document();
-				doc.add(new IntPoint(intFieldName, i));
+				doc.add(new LegacyIntField(intFieldName, i, Store.YES));
 				writer.addDocument(doc);
 			}
 		}
@@ -63,7 +66,8 @@ public class LuceneExampleApplication implements CommandLineRunner {
 		// String searchString = "1";
 		// Query query = parser.parse(searchString);
 
-		Query query = IntPoint.newSetQuery(intFieldName, 1, 2, 3, 4, 5);
+		// Query query = IntPoint.newSetQuery(intFieldName, 1, 2, 3, 4, 5);
+		LegacyNumericRangeQuery<Integer> query = LegacyNumericRangeQuery.newIntRange(intFieldName, 1, 5, true, true);
 		TopDocs result = searcher.search(query, MAX_RESULTS);
 		ScoreDoc[] docs = result.scoreDocs;
 		for (ScoreDoc scoreDoc : docs) {
