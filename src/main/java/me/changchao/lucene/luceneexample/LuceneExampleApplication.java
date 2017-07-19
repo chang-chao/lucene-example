@@ -7,7 +7,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
-import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.LegacyIntField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -15,7 +14,6 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.LegacyNumericRangeQuery;
-import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.FSDirectory;
@@ -28,7 +26,7 @@ import lombok.extern.apachecommons.CommonsLog;
 @SpringBootApplication
 @CommonsLog
 public class LuceneExampleApplication implements CommandLineRunner {
-	public static final int MAX_RESULTS = 10;
+	public static final int MAX_RESULTS = Integer.MAX_VALUE;
 
 	public static void main(String[] args) {
 		SpringApplication.run(LuceneExampleApplication.class, args);
@@ -67,7 +65,7 @@ public class LuceneExampleApplication implements CommandLineRunner {
 		// Query query = parser.parse(searchString);
 
 		// Query query = IntPoint.newSetQuery(intFieldName, 1, 2, 3, 4, 5);
-		LegacyNumericRangeQuery<Integer> query = LegacyNumericRangeQuery.newIntRange(intFieldName, 1, 5, true, true);
+		LegacyNumericRangeQuery<Integer> query = LegacyNumericRangeQuery.newIntRange(intFieldName, 200, 500, true, false);
 		TopDocs result = searcher.search(query, MAX_RESULTS);
 		ScoreDoc[] docs = result.scoreDocs;
 		for (ScoreDoc scoreDoc : docs) {
