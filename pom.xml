@@ -47,13 +47,20 @@
 			<version>7.2.1</version>
 		</dependency>
 
-<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-test-framework -->
-<dependency>
-    <groupId>org.apache.lucene</groupId>
-    <artifactId>lucene-test-framework</artifactId>
-    <version>7.2.1</version>
-    <scope>test</scope>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-grouping -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-grouping</artifactId>
+			<version>7.2.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-test-framework -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-test-framework</artifactId>
+			<version>7.2.1</version>
+			<scope>test</scope>
+		</dependency>
 
 
 
